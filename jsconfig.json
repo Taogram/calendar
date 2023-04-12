@@ -1,0 +1,21 @@
+/*
+ * @Description:
+ * @Version: 1.0.0
+ * @Author: lax
+ * @Date: 2022-03-11 00:49:25
+ * @LastEditors: lax
+ * @LastEditTime: 2022-03-19 12:39:57
+ * @FilePath: \taobi\jsconfig.json
+ */
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["node_modules"]
+}
