@@ -1,7 +1,7 @@
 {
   "name": "tao_calendar",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "description": "基于js的干支历",
   "main": "lib/index.js",
   "license": "MPL-2.0",
