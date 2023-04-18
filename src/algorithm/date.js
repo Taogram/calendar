@@ -1,12 +1,13 @@
 /*
- * @Description:
+ * @Description: 公式参考：https://zhuanlan.zhihu.com/p/93508430
  * @Version: 1.0.0
  * @Author: lax
  * @Date: 2021-10-15 23:25:13
  * @LastEditors: lax
- * @LastEditTime: 2021-10-16 00:14:21
+ * @LastEditTime: 2023-04-15 11:08:33
  * @FilePath: \taobi\src\pojo\algorithm\day.js
  */
+// this is not use
 const _ = require("@/tools/index");
 function getCenturyCount(year) {
 	return Math.floor(year / 100) + 1;

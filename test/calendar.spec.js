@@ -4,31 +4,21 @@
  * @Author: lax
  * @Date: 2021-02-11 12:08:22
  * @LastEditors: lax
- * @LastEditTime: 2022-03-19 11:58:28
+ * @LastEditTime: 2023-04-15 10:24:31
  * @FilePath: \taobi\test\calendar.spec.js
  */
 // const { sexagenaryCycle } = require("@/pojo/Tao.js");
 // const SC = sexagenaryCycle;
-// const Calendar = require("@/pojo/cstb/Calendar");
+const Calendar = require("@/pojo/Calendar");
 
 // TODO
 describe("干支历对象：Calendar", () => {
-	it(`todo`, () => {
-		expect(1).toBe(1);
+	it(`公历=>干支历`, () => {
+		const calendar = new Calendar(new Date("2023-04-15 10:15:00"));
+		const cstb = calendar.sc(true).reduce((acc, next) => {
+			return acc + next;
+		}, "");
+
+		expect(cstb).toBe("癸卯丙辰癸卯丁巳");
 	});
-	// for (let a = 0; a < 60; a++) {
-	// 	for (let b = 0; b < 60; b++) {
-	// 		for (let c = 0; c < 60; c++) {
-	// 			for (let d = 0; d < 60; d++) {
-	// 				const sc = new Calendar([a, b, c, d]).sc(true).reduce((acc, next) => {
-	// 					return acc + next;
-	// 				}, "");
-	// 				const name = `${SC[a]}${SC[b]}${SC[c]}${SC[d]}`;
-	// 				it(`${name},对应值应为：${sc}`, () => {
-	// 					expect(sc).toBe(name);
-	// 				});
-	// 			}
-	// 		}
-	// 	}
-	// }
 });

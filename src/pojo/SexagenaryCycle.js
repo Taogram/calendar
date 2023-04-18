@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-04-06 20:06:30
+ * @LastEditTime: 2023-04-18 20:37:03
  */
 const {
 	celestialStems,
@@ -73,33 +73,11 @@ class SexagenaryCycle {
 		const index = ~~(this.index / 10) * 10;
 		return new SexagenaryCycle(index);
 	}
-
-	/**
-	 * 获取隐旗
-	 * @param {boolean} is
-	 * @returns 名称/序号
-	 */
-	getConceal(is) {
-		const row = ~~(this.getLead().index / 10);
-		return is ? ceremony[row] : row;
-	}
-
-	/**
-	 * 获取天干对应的旗
-	 * @param {boolean} is
-	 * @returns 名称/序号
-	 */
-	getCsOrigin(is) {
-		// 时干
-		let cs = this.cs(is);
-		// 如果本身是旬首则选所隐旗
-		if (cs === CELESTIAL_STEMS.METH || cs === 0) cs = this.getConceal(is);
-		return cs;
-	}
+	
 	// 天干地支对应的序列
 
 	/*
-		  x:0		x:1		x:2		x:3 	x:4 	x:5 	x:6 	x:7 	x:8 	x:9
+		x:0		x:1		x:2		x:3 	x:4 	x:5 	x:6 	x:7 	x:8 	x:9
 		0 00/00		01/00	02/00	03/00	04/00	05/00	06/00	07/00	08/00	09/00	
 		1 10/10		11/10	00/-2	01/-2	02/-2	03/-2	04/-2	05/-2	06/-2	07/-2
 		2 08/08		09/08	10/08	11/08	00/-4	01/-4	02/-4	03/-4	04/-4	05/-4
@@ -114,8 +92,19 @@ class SexagenaryCycle {
 	 * @returns {Number} 干支序号
 	 */
 	#getIndex(x = this.x, y = this.y) {
-		if (x === -1 || y === -1)
+		// 0/0  0/10 0/8  0/6  0/4  0/2
+		// 1/1  1/11 1/9  1/7  1/5  1/3
+		// 2/2  2/0  2/10 2/8  2/6  2/4
+		// 3/3  3/1  3/11 3/9  3/7  3/5
+		// 4/4  4/2  4/0  4/10 4/8  4/6
+		// 5/5  5/3  5/1  5/11 5/9  5/7
+		// 6/6  6/4  6/2  6/0  6/10 6/8
+		// 7/7  7/5  7/3  7/1  7/11 7/9
+		// 8/8  8/6  8/4  8/2  8/0  8/10
+		// 9/9  9/7  9/5  9/3  9/1  9/11
+		if (x === -1 || y === -1 || (x % 2 === 0) !== (y % 2 === 0))
 			throw new Error(`can\`t use this arg by x:${x} y:${y}`);
+
 		// 干支相差之数（负按12转正）/2 = 6-干支十位数值
 		const difference = y - x;
 		const index = ((difference + 24) % 12) / 2;

@@ -4,34 +4,32 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2023-04-12 22:27:48
+ * @LastEditTime: 2023-04-15 11:14:52
  */
 const { SolarTerms } = require("solar_terms.js");
-const {
-	celestialStems,
-	sexagenaryCycle,
-	terrestrialBranches,
-} = require("@/pojo/Tao");
+const { celestialStems, sexagenaryCycle } = require("@/pojo/Tao");
 const calcMonth = require("@/algorithm/calcMonth");
 const Julian = require("julian.js");
 /**
- * @description 转干支历，安阳历计
- * @param {*} y year
- * @param {*} m month
- * @param {*} d date
- * @param {*} h hour
- * @param {*} o origin
+ * @description 转干支历
+ * @param {date} date 公历时间
+ * @param {date} o origin 干支历起点
+ * @param {Object} p 配置
  */
 
-function algorithm(date, o = new Date("-002696-10-14T14:00:00.000Z")) {
+function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
+	const date = new Date(_date);
+	const o = new Date(_o);
+
 	const year = date.getFullYear();
 	let origin = o.getFullYear();
 	let _year = year;
 	let _origin = origin;
-	if (_year < 0) _year = (_year % 60) + 61;
-	if (_origin < 0) _origin = (_origin % 60) + 61;
+	if (_year < 0) _year = (_year % 60) + 60;
+	if (_origin < 0) _origin = (_origin % 60) + 60;
 
-	const during = new SolarTerms({ year }).getSolarTermsAll();
+	const options = Object.assign({}, p, { year });
+	const during = new SolarTerms(options).getSolarTermsAll();
 
 	const start = during[2];
 	if (date.getTime() <= start.getTime()) _year -= 1;
@@ -47,10 +45,11 @@ function algorithm(date, o = new Date("-002696-10-14T14:00:00.000Z")) {
 	// 49->0
 
 	// yIndex->yCS->mCS
-	const mIndex = sexagenaryCycle.indexOf(
-		celestialStems[((((yIndex % 10) * 2) % 10) + 2) % 10] +
-			terrestrialBranches[calcMonth(date, during)]
-	);
+	const mIndex =
+		sexagenaryCycle.indexOf(
+			celestialStems[((((yIndex % 10) * 2) % 10) + 2) % 10] + "寅"
+		) +
+		(calcMonth(date, during) - 2);
 
 	let dIndex = (~~Julian.UTC$JD(date) - ~~Julian.UTC$JD(o)) % 60;
 	if (dIndex < 0) dIndex += 60;

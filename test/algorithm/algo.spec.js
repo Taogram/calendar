@@ -4,24 +4,50 @@
  * @Author: lax
  * @Date: 2023-04-12 20:16:08
  * @LastEditors: lax
- * @LastEditTime: 2023-04-12 22:31:25
+ * @LastEditTime: 2023-04-15 10:07:40
  */
+const moment = require("moment");
 const algo = require("@/algorithm/SolarCalendar");
 const {
 	celestialStems,
 	terrestrialBranches,
 	sexagenaryCycle,
 } = require("@/pojo/Tao");
+const _2022 = require("./2022");
 
 describe("算法测试：年干支", () => {
-	it("TODO", () => {
-		// todo
+	const years = [
+		["-002696-10-14T14:00:00.000Z", "甲子"],
+		["2021-09-05", "辛丑"],
+	];
+	years.map(([time, cstb]) => {
+		const t = moment(time).format("YYYY-MM-DD:HH-mm:ss");
+		it(`date: ${t} = ${cstb}}`, () => {
+			expect(sexagenaryCycle[algo(time)[0]]).toBe(cstb);
+		});
 	});
 });
 
 describe("算法测试：月干支", () => {
-	it("TODO", () => {
-		// todo
+	for (let i = 0; i < 10; i++) {
+		const index = (((i * 2) % 10) + 2) % 10;
+		const time = new Date(`${1984 + i}-03-01 00:00:00`);
+		const year = algo(time)[0];
+		const month = algo(time)[1];
+		it(`年干：${celestialStems[i]}=>月干：${celestialStems[index]}`, () => {
+			expect(sexagenaryCycle[year][0]).toBe(celestialStems[i]);
+			expect(sexagenaryCycle[month][0]).toBe(celestialStems[index]);
+		});
+	}
+
+	_2022.map(([t, index]) => {
+		const time = new Date(t);
+		const month = algo(time)[1];
+		it(`时间：${moment(time).format("YYYY-MM-DD HH:mm")}=>月支：${
+			terrestrialBranches[index]
+		}`, () => {
+			expect(sexagenaryCycle[month][1]).toBe(terrestrialBranches[index]);
+		});
 	});
 });
 

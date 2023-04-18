@@ -1,9 +1,9 @@
 {
-  "name": "calendar",
+  "name": "tao_calendar",
   "version": "0.0.0",
-  "private": false,
+  "private": true,
   "description": "基于js的干支历",
-  "main": "lib/pojo/taobi/TheArtOfBecomingInvisible.js",
+  "main": "lib/index.js",
   "license": "MPL-2.0",
   "scripts": {
     "test:unit": "jest --verbose",
@@ -13,11 +13,8 @@
     "lib/",
     "readme.md"
   ],
-  "dependencies": {
-    "consola": "^2.15.0",
-    "docx": "^7.3.0",
-    "fs-extra": "^10.0.1",
-    "solar_terms.js": "^0.0.2"
+  "dependencies": { 
+    "solar_terms.js": "^0.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -41,6 +38,8 @@
     "node",
     "qimen",
     "js",
+    "calendar",
+    "china",
     "javascript"
   ]
 }

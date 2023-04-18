@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-04-09 22:16:00
  * @LastEditors: lax
- * @LastEditTime: 2023-04-11 20:53:42
+ * @LastEditTime: 2023-04-15 09:59:03
  */
 
 module.exports = function calcMonth(date, during) {
@@ -16,5 +16,5 @@ module.exports = function calcMonth(date, during) {
 		let isBetween = dateTime >= acc.getTime() && dateTime < next.getTime();
 		return isBetween ? i : next;
 	});
-	return ~~(index / 2 + 0.5);
+	return ~~(index / 2 + 0.5) % 12;
 };
