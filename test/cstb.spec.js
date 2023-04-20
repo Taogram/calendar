@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-12-11 00:57:08
  * @LastEditors: lax
- * @LastEditTime: 2023-04-06 20:15:41
+ * @LastEditTime: 2023-04-20 21:56:07
  * @FilePath: \calendar\test\cstb.spec.js
  */
 const CSTB = require("@/pojo/SexagenaryCycle");
@@ -64,21 +64,21 @@ describe("天干地支对象：sexagenaryCycle", () => {
 		});
 	}
 
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 12; j++) {
-			const cs = celestialStems[i];
-			const tb = terrestrialBranches[j];
-			it(`2参数,类型:string,值:${cs}/${tb}=>结果:${cs + tb}`, () => {
-				expect(new CSTB(cs, tb).cstb(true)).toBe(cs + tb);
-			});
+	for (let i = 0; i < 60; i++) {
+		const index = sexagenaryCycle[i];
+		const [cs, tb] = index;
+		const x = celestialStems.indexOf(cs);
+		const y = terrestrialBranches.indexOf(tb);
+		it(`2参数,类型:string,值:${cs}/${tb}=>结果:${cs + tb}`, () => {
+			expect(new CSTB(cs, tb).cstb(true)).toBe(cs + tb);
+		});
 
-			it(`2参数,类型:number,值:${i}/${j}=>结果:${cs + tb}`, () => {
-				expect(new CSTB(i, j).cstb(true)).toBe(cs + tb);
-			});
+		it(`2参数,类型:number,值:${x}/${y}=>结果:${cs + tb}`, () => {
+			expect(new CSTB(x, y).cstb(true)).toBe(cs + tb);
+		});
 
-			it(`2参数,类型:string,值:"${i}"/"${j}"=>结果:${cs + tb}`, () => {
-				expect(new CSTB(`${i}`, `${j}`).cstb(true)).toBe(cs + tb);
-			});
-		}
+		it(`2参数,类型:string,值:"${x}"/"${y}"=>结果:${cs + tb}`, () => {
+			expect(new CSTB(`${x}`, `${y}`).cstb(true)).toBe(cs + tb);
+		});
 	}
 });
