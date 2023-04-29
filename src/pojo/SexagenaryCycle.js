@@ -4,14 +4,9 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-04-18 20:37:03
+ * @LastEditTime: 2023-04-29 07:39:26
  */
-const {
-	celestialStems,
-	CELESTIAL_STEMS,
-	terrestrialBranches,
-	ceremony,
-} = require("@/pojo/Tao.js");
+const { celestialStems, terrestrialBranches } = require("@/pojo/Tao.js");
 
 /**
  * 天干地支对象
@@ -73,7 +68,7 @@ class SexagenaryCycle {
 		const index = ~~(this.index / 10) * 10;
 		return new SexagenaryCycle(index);
 	}
-	
+
 	// 天干地支对应的序列
 
 	/*
