@@ -4,10 +4,11 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-04-29 07:39:26
+ * @LastEditTime: 2023-05-05 23:35:14
  */
-const { celestialStems, terrestrialBranches } = require("@/pojo/Tao.js");
-
+const CelestialStems = require("@/pojo/CelestialStems");
+const TerrestrialBranches = require("@/pojo/TerrestrialBranches");
+const inspect = Symbol.for("nodejs.util.inspect.custom");
 /**
  * 天干地支对象
  */
@@ -15,12 +16,12 @@ class SexagenaryCycle {
 	constructor(...num) {
 		/**
 		 * 天干序号 0~9
-		 * @type {number}
+		 * @type {CelestialStems}
 		 */
 		this.x;
 		/**
 		 * 地支序号 0~11
-		 * @type {number}
+		 * @type {TerrestrialBranches}
 		 */
 		this.y;
 		/**
@@ -39,7 +40,7 @@ class SexagenaryCycle {
 	 * @returns 名称/序号
 	 */
 	cs(is) {
-		return is ? celestialStems[this.x] : this.x;
+		return this.x.getValue(is);
 	}
 
 	/**
@@ -48,7 +49,7 @@ class SexagenaryCycle {
 	 * @returns 名称/序号
 	 */
 	tb(is) {
-		return is ? terrestrialBranches[this.y] : this.y;
+		return this.y.getValue(is);
 	}
 
 	/**
@@ -101,10 +102,10 @@ class SexagenaryCycle {
 			throw new Error(`can\`t use this arg by x:${x} y:${y}`);
 
 		// 干支相差之数（负按12转正）/2 = 6-干支十位数值
-		const difference = y - x;
+		const difference = y.getValue() - x.getValue();
 		const index = ((difference + 24) % 12) / 2;
 		const tensPlace = (6 - index) % 6;
-		return tensPlace * 10 + x;
+		return tensPlace * 10 + x.getValue();
 	}
 
 	/**
@@ -119,8 +120,8 @@ class SexagenaryCycle {
 		// result-> 0-11 -> terrestrialBranches.index
 		const y = arg % 12;
 		// result-> 0-59
-		this.x = x;
-		this.y = y;
+		this.x = new CelestialStems(x);
+		this.y = new TerrestrialBranches(y);
 		this.index = arg;
 	}
 
@@ -156,10 +157,13 @@ class SexagenaryCycle {
 	}
 
 	#generateByTwo(x, y) {
-		// 文字取序号，数字取周期后序列
-		this.x = ~~(x + 1) === 0 ? celestialStems.indexOf(x) : ~~x % 10;
-		this.y = ~~(y + 1) === 0 ? terrestrialBranches.indexOf(y) : ~~y % 12;
+		this.x = new CelestialStems(x);
+		this.y = new TerrestrialBranches(y);
 		this.index = this.#getIndex();
+	}
+
+	[inspect]() {
+		return this.cstb();
 	}
 }
 
