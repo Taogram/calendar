@@ -13,8 +13,9 @@
     "lib/",
     "readme.md"
   ],
-  "dependencies": { 
-    "solar_terms.js": "^0.0.3"
+  "dependencies": {
+    "solar_terms.js": "^0.0.3",
+    "tao_taichi.js": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
