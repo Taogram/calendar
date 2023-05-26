@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-05-15 19:47:16
+ * @LastEditTime: 2023-05-15 22:48:58
  */
 const CELESTIAL_STEMS = [
 	"甲",
@@ -20,6 +20,9 @@ const CELESTIAL_STEMS = [
 ];
 const { Phases } = require("tao_taichi.js");
 const inspect = Symbol.for("nodejs.util.inspect.custom");
+/**
+ * @class 天干
+ */
 class CelestialStems extends Phases {
 	constructor(index) {
 		if (index instanceof CelestialStems) return index;
@@ -54,6 +57,18 @@ class CelestialStems extends Phases {
 	// 破
 	break() {
 		// TODO
+	}
+
+	/**
+	 * @description 与天干克应
+	 * @param {CelestialStems} phases
+	 * @returns
+	 */
+	to(phases) {
+		const cs = new CelestialStems(phases);
+		if (this.combination().index === cs.index) return 0;
+		if (this.conflict().index === cs.index) return 0;
+		return -1;
 	}
 
 	[inspect]() {
