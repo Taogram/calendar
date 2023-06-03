@@ -4,8 +4,9 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-05-15 22:48:58
+ * @LastEditTime: 2023-06-03 10:59:46
  */
+const CONNECTION = require("@/pojo/alias.js");
 const CELESTIAL_STEMS = [
 	"甲",
 	"乙",
@@ -41,7 +42,12 @@ class CelestialStems extends Phases {
 	// 合
 	// 05/16/27/38/49
 	combination() {
-		return new CelestialStems((this.index + 5) % 10);
+		const cs = new CelestialStems((this.index + 5) % 10);
+		return cs;
+	}
+
+	he() {
+		return this.combination();
 	}
 
 	// 冲
@@ -50,13 +56,28 @@ class CelestialStems extends Phases {
 	conflict() {
 		if (this.index !== 4 && this.index !== 5)
 			return new CelestialStems((this.index + 6) % 12);
-		return null;
+		return -1;
 		// TODO 48、04、15
+	}
+
+	chong() {
+		return this.conflict();
 	}
 
 	// 破
 	break() {
 		// TODO
+	}
+
+	get(tag, is) {
+		switch (tag) {
+			case "冲":
+				return this.chong();
+			case "合":
+				return this.he();
+			default:
+				return Phases.prototype.get.call(this, tag, is);
+		}
 	}
 
 	/**
@@ -66,8 +87,8 @@ class CelestialStems extends Phases {
 	 */
 	to(phases) {
 		const cs = new CelestialStems(phases);
-		if (this.combination().index === cs.index) return 0;
-		if (this.conflict().index === cs.index) return 0;
+		if (this.he().index === cs.index) return 0;
+		if (this.chong().index === cs.index) return 1;
 		return -1;
 	}
 
@@ -75,4 +96,7 @@ class CelestialStems extends Phases {
 		return this.getValue();
 	}
 }
+CelestialStems.RELATION = Phases.RELATION;
+CelestialStems.CONNECTION = CONNECTION;
+CelestialStems.CELESTIAL_STEMS = CELESTIAL_STEMS;
 module.exports = CelestialStems;

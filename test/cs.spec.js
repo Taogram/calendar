@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-05-06 20:24:29
  * @LastEditors: lax
- * @LastEditTime: 2023-05-15 19:47:46
+ * @LastEditTime: 2023-06-02 19:30:42
  */
 const CelestialStems = require("@/pojo/CelestialStems");
 describe("天干五行", () => {
@@ -62,7 +62,54 @@ describe("天干克应-冲", () => {
 	});
 
 	it(`戊己无冲`, () => {
-		expect(new CelestialStems(4).conflict()).toBe(null);
-		expect(new CelestialStems(5).conflict()).toBe(null);
+		expect(new CelestialStems(4).conflict()).toBe(-1);
+		expect(new CelestialStems(5).conflict()).toBe(-1);
+	});
+
+	describe("method-get", () => {
+		it(`get`, () => {
+			expect(new CelestialStems(0).get("合", true).getValue(true)).toBe("己");
+		});
+		it(`父函数get`, () => {
+			expect(new CelestialStems(0).get("生", true)).toBe("火");
+		});
+	});
+
+	describe("method-to", () => {
+		it(`合`, () => {
+			expect(new CelestialStems("甲").to(new CelestialStems("己"))).toBe(
+				CelestialStems.CONNECTION.HE
+			);
+			expect(new CelestialStems("乙").to(new CelestialStems("庚"))).toBe(
+				CelestialStems.CONNECTION.HE
+			);
+			expect(new CelestialStems("丙").to(new CelestialStems("辛"))).toBe(
+				CelestialStems.CONNECTION.HE
+			);
+			expect(new CelestialStems("丁").to(new CelestialStems("壬"))).toBe(
+				CelestialStems.CONNECTION.HE
+			);
+			expect(new CelestialStems("戊").to(new CelestialStems("癸"))).toBe(
+				CelestialStems.CONNECTION.HE
+			);
+		});
+		it(`冲`, () => {
+			expect(new CelestialStems("甲").to(new CelestialStems("庚"))).toBe(
+				CelestialStems.CONNECTION.CHONG
+			);
+			expect(new CelestialStems("乙").to(new CelestialStems("辛"))).toBe(
+				CelestialStems.CONNECTION.CHONG
+			);
+			expect(new CelestialStems("丙").to(new CelestialStems("壬"))).toBe(
+				CelestialStems.CONNECTION.CHONG
+			);
+			expect(new CelestialStems("丁").to(new CelestialStems("癸"))).toBe(
+				CelestialStems.CONNECTION.CHONG
+			);
+			expect(new CelestialStems("戊").to(new CelestialStems("己"))).toBe(-1);
+		});
+		it(`父函数get`, () => {
+			expect(new CelestialStems(0).get("生", true)).toBe("火");
+		});
 	});
 });
