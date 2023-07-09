@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-06-03 13:16:01
+ * @LastEditTime: 2023-07-09 18:39:46
  */
 const CONNECTION = require("@/pojo/alias.js");
 const TERRESTRIAL_BRANCHES = [
@@ -31,7 +31,8 @@ class TerrestrialBranches extends Phases {
 			~~(index + 1) === 0 ? TERRESTRIAL_BRANCHES.indexOf(index) : ~~index % 12;
 		if (i < 0) throw new Error("arg can`t be use");
 		// 水土木木土火火土金金土水
-		super(i % 3 === 1 ? 4 : ((~~((i + 1) / 3) % 4) + 1) % 4, (i + 1) % 2);
+		const _i = ~~((i + 1) / 3) % 4;
+		super(i % 3 === 1 ? 4 : _i === 0 ? 0 : 3 - (_i % 3), (i + 1) % 2);
 		this.index = i;
 	}
 

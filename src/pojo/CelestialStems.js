@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-06-03 10:59:46
+ * @LastEditTime: 2023-07-09 18:46:12
  */
 const CONNECTION = require("@/pojo/alias.js");
 const CELESTIAL_STEMS = [
@@ -31,7 +31,7 @@ class CelestialStems extends Phases {
 		const i =
 			~~(index + 1) === 0 ? CELESTIAL_STEMS.indexOf(index) : ~~index % 10;
 		if (i < 0) throw new Error("arg can`t be use");
-		super((~~(i / 2) + 2) % 5, (i + 1) % 2);
+		super((~~(i / 2) + 2 * ((~~(i / 2) + 1) % 2)) % 6, (i + 1) % 2);
 		this.index = i;
 	}
 
