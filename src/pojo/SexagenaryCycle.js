@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-05-05 23:35:14
+ * @LastEditTime: 2023-07-09 20:16:31
  */
 const CelestialStems = require("@/pojo/CelestialStems");
 const TerrestrialBranches = require("@/pojo/TerrestrialBranches");
@@ -39,8 +39,8 @@ class SexagenaryCycle {
 	 * @param {boolean} is
 	 * @returns 名称/序号
 	 */
-	cs(is) {
-		return this.x.getValue(is);
+	cs(is = false) {
+		return is ? this.x.getValue(true) : this.x;
 	}
 
 	/**
@@ -48,8 +48,8 @@ class SexagenaryCycle {
 	 * @param {boolean} is
 	 * @returns 名称/序号
 	 */
-	tb(is) {
-		return this.y.getValue(is);
+	tb(is = false) {
+		return is ? this.y.getValue(true) : this.y;
 	}
 
 	/**
@@ -57,7 +57,7 @@ class SexagenaryCycle {
 	 * @param {boolean} is
 	 * @returns 名称/序号
 	 */
-	cstb(is) {
+	cstb(is = false) {
 		return is ? this.cs(is) + this.tb(is) : this.index;
 	}
 
