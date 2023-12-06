@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-07-09 20:16:31
+ * @LastEditTime: 2023-10-11 19:46:39
  */
 const CelestialStems = require("@/pojo/CelestialStems");
 const TerrestrialBranches = require("@/pojo/TerrestrialBranches");
@@ -103,7 +103,8 @@ class SexagenaryCycle {
 
 		// 干支相差之数（负按12转正）/2 = 6-干支十位数值
 		const difference = y.getValue() - x.getValue();
-		const index = ((difference + 24) % 12) / 2;
+		// todo bug
+		const index = ((difference + 12) % 12) / 2;
 		const tensPlace = (6 - index) % 6;
 		return tensPlace * 10 + x.getValue();
 	}
