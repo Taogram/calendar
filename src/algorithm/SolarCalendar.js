@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2023-05-05 23:43:01
+ * @LastEditTime: 2024-02-13 16:06:32
  */
 const { SolarTerms } = require("solar_terms.js");
 const { celestialStems, sexagenaryCycle } = require("@/pojo/Tao");
@@ -65,7 +65,7 @@ function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
 		sexagenaryCycle.indexOf(celestialStems[((dIndex % 10) * 2) % 10] + "子") +
 		(~~((date.getHours() + 1) / 2) % 12);
 
-	return [yIndex, mIndex, dIndex, hIndex];
+	return [[yIndex, mIndex, dIndex, hIndex], during];
 }
 
 module.exports = algorithm;
