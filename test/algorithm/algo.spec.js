@@ -4,15 +4,11 @@
  * @Author: lax
  * @Date: 2023-04-12 20:16:08
  * @LastEditors: lax
- * @LastEditTime: 2024-02-13 16:13:38
+ * @LastEditTime: 2024-05-19 09:39:54
  */
 const moment = require("moment");
 const algo = require("@/algorithm/SolarCalendar");
-const {
-	celestialStems,
-	terrestrialBranches,
-	sexagenaryCycle,
-} = require("@/pojo/Tao");
+const { CS_ARR, SC_ARR, TB_ARR } = require("tao_name");
 const _2022 = require("./2022");
 
 describe("算法测试：年干支", () => {
@@ -23,7 +19,7 @@ describe("算法测试：年干支", () => {
 	years.map(([time, cstb]) => {
 		const t = moment(time).format("YYYY-MM-DD:HH-mm:ss");
 		it(`date: ${t} = ${cstb}}`, () => {
-			expect(sexagenaryCycle[algo(time)[0][0]]).toBe(cstb);
+			expect(SC_ARR[algo(time)[0][0]]).toBe(cstb);
 		});
 	});
 });
@@ -33,9 +29,9 @@ describe("算法测试：月干支", () => {
 		const index = (((i * 2) % 10) + 2) % 10;
 		const time = new Date(`${1984 + i}-03-01 00:00:00`);
 		const [year, month] = algo(time)[0];
-		it(`年干：${celestialStems[i]}=>月干：${celestialStems[index]}`, () => {
-			expect(sexagenaryCycle[year][0]).toBe(celestialStems[i]);
-			expect(sexagenaryCycle[month][0]).toBe(celestialStems[index]);
+		it(`年干：${CS_ARR[i]}=>月干：${CS_ARR[index]}`, () => {
+			expect(SC_ARR[year][0]).toBe(CS_ARR[i]);
+			expect(SC_ARR[month][0]).toBe(CS_ARR[index]);
 		});
 	}
 
@@ -43,9 +39,9 @@ describe("算法测试：月干支", () => {
 		const time = new Date(t);
 		const month = algo(time)[0][1];
 		it(`时间：${moment(time).format("YYYY-MM-DD HH:mm")}=>月支：${
-			terrestrialBranches[index]
+			TB_ARR[index]
 		}`, () => {
-			expect(sexagenaryCycle[month][1]).toBe(terrestrialBranches[index]);
+			expect(SC_ARR[month][1]).toBe(TB_ARR[index]);
 		});
 	});
 });
@@ -86,16 +82,16 @@ describe("算法测试: 日干支", () => {
 describe("算法测试: 时干支", () => {
 	for (let i = 0; i < 24; i++) {
 		const date = new Date(`2022-06-08 ${i < 10 ? "0" + i : i}:01:00`);
-		const index = terrestrialBranches[~~((i + 1) / 2) % 12];
+		const index = TB_ARR[~~((i + 1) / 2) % 12];
 		it(`时支计算: ${i}小时->${index}`, () => {
-			expect(sexagenaryCycle[algo(date)[0][3]][1]).toBe(index);
+			expect(SC_ARR[algo(date)[0][3]][1]).toBe(index);
 		});
 	}
 	for (let i = 0; i < 10; i++) {
 		const date = new Date(`2022-05-${21 + i} 00:01:00`);
 		const index = (i * 2) % 10;
-		it(`时干计算: 日干${celestialStems[i]}->时干${celestialStems[index]}`, () => {
-			expect(sexagenaryCycle[algo(date)[0][3]][0]).toBe(celestialStems[index]);
+		it(`时干计算: 日干${CS_ARR[i]}->时干${CS_ARR[index]}`, () => {
+			expect(SC_ARR[algo(date)[0][3]][0]).toBe(CS_ARR[index]);
 		});
 	}
 });

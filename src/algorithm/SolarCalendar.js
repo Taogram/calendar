@@ -4,10 +4,10 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2024-02-13 16:06:32
+ * @LastEditTime: 2024-05-19 09:39:00
  */
 const { SolarTerms } = require("solar_terms.js");
-const { celestialStems, sexagenaryCycle } = require("@/pojo/Tao");
+const { CELESTIAL_STEMS_ARR, SEXAGENARY_CYCLE_ARR } = require("tao_name");
 const calcMonth = require("@/algorithm/calcMonth");
 const Julian = require("julian.js");
 /**
@@ -46,8 +46,8 @@ function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
 
 	// yIndex->yCS->mCS
 	const mIndex =
-		sexagenaryCycle.indexOf(
-			celestialStems[((((yIndex % 10) * 2) % 10) + 2) % 10] + "寅"
+		SEXAGENARY_CYCLE_ARR.indexOf(
+			CELESTIAL_STEMS_ARR[((((yIndex % 10) * 2) % 10) + 2) % 10] + "寅"
 		) +
 		(calcMonth(date, during) - 2);
 
@@ -62,7 +62,9 @@ function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
 	// 49->8
 
 	const hIndex =
-		sexagenaryCycle.indexOf(celestialStems[((dIndex % 10) * 2) % 10] + "子") +
+		SEXAGENARY_CYCLE_ARR.indexOf(
+			CELESTIAL_STEMS_ARR[((dIndex % 10) * 2) % 10] + "子"
+		) +
 		(~~((date.getHours() + 1) / 2) % 12);
 
 	return [[yIndex, mIndex, dIndex, hIndex], during];

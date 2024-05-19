@@ -4,21 +4,15 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-07-09 18:46:12
+ * @LastEditTime: 2024-05-18 21:11:30
  */
 const CONNECTION = require("@/pojo/alias.js");
-const CELESTIAL_STEMS = [
-	"甲",
-	"乙",
-	"丙",
-	"丁",
-	"戊",
-	"己",
-	"庚",
-	"辛",
-	"壬",
-	"癸",
-];
+const {
+	CELESTIAL_STEMS_ARR,
+	CELESTIAL_STEMS,
+	CS,
+	CS_ARR,
+} = require("tao_name");
 const { Phases } = require("tao_taichi.js");
 const inspect = Symbol.for("nodejs.util.inspect.custom");
 /**
@@ -29,14 +23,14 @@ class CelestialStems extends Phases {
 		if (index instanceof CelestialStems) return index;
 		// 文字取序号，数字取周期后序列
 		const i =
-			~~(index + 1) === 0 ? CELESTIAL_STEMS.indexOf(index) : ~~index % 10;
+			~~(index + 1) === 0 ? CELESTIAL_STEMS_ARR.indexOf(index) : ~~index % 10;
 		if (i < 0) throw new Error("arg can`t be use");
 		super((~~(i / 2) + 2 * ((~~(i / 2) + 1) % 2)) % 6, (i + 1) % 2);
 		this.index = i;
 	}
 
 	getValue(is = false) {
-		return is ? CELESTIAL_STEMS[this.index] : this.index;
+		return is ? CELESTIAL_STEMS_ARR[this.index] : this.index;
 	}
 
 	// 合
@@ -98,5 +92,8 @@ class CelestialStems extends Phases {
 }
 CelestialStems.RELATION = Phases.RELATION;
 CelestialStems.CONNECTION = CONNECTION;
+CelestialStems.CELESTIAL_STEMS_ARR = CELESTIAL_STEMS_ARR;
 CelestialStems.CELESTIAL_STEMS = CELESTIAL_STEMS;
+CelestialStems.CS_ARR = CS_ARR;
+CelestialStems.CS = CS;
 module.exports = CelestialStems;

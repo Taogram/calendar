@@ -4,23 +4,15 @@
  * @Author: lax
  * @Date: 2023-05-05 23:10:26
  * @LastEditors: lax
- * @LastEditTime: 2023-07-09 18:39:46
+ * @LastEditTime: 2024-05-18 21:12:51
  */
 const CONNECTION = require("@/pojo/alias.js");
-const TERRESTRIAL_BRANCHES = [
-	"子",
-	"丑",
-	"寅",
-	"卯",
-	"辰",
-	"巳",
-	"午",
-	"未",
-	"申",
-	"酉",
-	"戌",
-	"亥",
-];
+const {
+	TERRESTRIAL_BRANCHES_ARR,
+	TERRESTRIAL_BRANCHES,
+	TB,
+	TB_ARR,
+} = require("tao_name");
 const { Phases } = require("tao_taichi.js");
 const inspect = Symbol.for("nodejs.util.inspect.custom");
 class TerrestrialBranches extends Phases {
@@ -28,7 +20,9 @@ class TerrestrialBranches extends Phases {
 		if (index instanceof TerrestrialBranches) return index;
 		// 文字取序号，数字取周期后序列
 		const i =
-			~~(index + 1) === 0 ? TERRESTRIAL_BRANCHES.indexOf(index) : ~~index % 12;
+			~~(index + 1) === 0
+				? TERRESTRIAL_BRANCHES_ARR.indexOf(index)
+				: ~~index % 12;
 		if (i < 0) throw new Error("arg can`t be use");
 		// 水土木木土火火土金金土水
 		const _i = ~~((i + 1) / 3) % 4;
@@ -37,7 +31,7 @@ class TerrestrialBranches extends Phases {
 	}
 
 	getValue(is = false) {
-		return is ? TERRESTRIAL_BRANCHES[this.index] : this.index;
+		return is ? TERRESTRIAL_BRANCHES_ARR[this.index] : this.index;
 	}
 
 	// 合
@@ -151,4 +145,7 @@ class TerrestrialBranches extends Phases {
 TerrestrialBranches.RELATION = Phases.RELATION;
 TerrestrialBranches.CONNECTION = CONNECTION;
 TerrestrialBranches.TERRESTRIAL_BRANCHES = TERRESTRIAL_BRANCHES;
+TerrestrialBranches.TERRESTRIAL_BRANCHES_ARR = TERRESTRIAL_BRANCHES_ARR;
+TerrestrialBranches.TB = TB;
+TerrestrialBranches.TB_ARR = TB_ARR;
 module.exports = TerrestrialBranches;

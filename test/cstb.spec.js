@@ -4,23 +4,19 @@
  * @Author: lax
  * @Date: 2020-12-11 00:57:08
  * @LastEditors: lax
- * @LastEditTime: 2023-04-20 21:56:07
+ * @LastEditTime: 2024-05-19 09:42:54
  * @FilePath: \calendar\test\cstb.spec.js
  */
 const CSTB = require("@/pojo/SexagenaryCycle");
-const {
-	celestialStems,
-	terrestrialBranches,
-	sexagenaryCycle,
-} = require("@/pojo/Tao");
+const { CS_ARR, SC_ARR, TB_ARR } = require("tao_name");
 
 describe("天干地支对象：sexagenaryCycle", () => {
 	for (let i = 0; i < 60; i++) {
-		const name = sexagenaryCycle[i];
-		const head = sexagenaryCycle[~~(i / 10) * 10];
+		const name = SC_ARR[i];
+		const head = SC_ARR[~~(i / 10) * 10];
 		const arr = Array.from(name);
-		const h = celestialStems.indexOf(arr[0]);
-		const t = terrestrialBranches.indexOf(arr[1]);
+		const h = CS_ARR.indexOf(arr[0]);
+		const t = TB_ARR.indexOf(arr[1]);
 		const obj = {
 			x: h,
 			y: t,
@@ -65,10 +61,10 @@ describe("天干地支对象：sexagenaryCycle", () => {
 	}
 
 	for (let i = 0; i < 60; i++) {
-		const index = sexagenaryCycle[i];
+		const index = SC_ARR[i];
 		const [cs, tb] = index;
-		const x = celestialStems.indexOf(cs);
-		const y = terrestrialBranches.indexOf(tb);
+		const x = CS_ARR.indexOf(cs);
+		const y = TB_ARR.indexOf(tb);
 		it(`2参数,类型:string,值:${cs}/${tb}=>结果:${cs + tb}`, () => {
 			expect(new CSTB(cs, tb).cstb(true)).toBe(cs + tb);
 		});

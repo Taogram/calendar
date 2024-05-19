@@ -4,10 +4,16 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2023-10-11 19:46:39
+ * @LastEditTime: 2024-05-18 21:14:54
  */
 const CelestialStems = require("@/pojo/CelestialStems");
 const TerrestrialBranches = require("@/pojo/TerrestrialBranches");
+const {
+	SEXAGENARY_CYCLE_ARR,
+	SEXAGENARY_CYCLE,
+	SC,
+	SC_ARR,
+} = require("tao_name");
 const inspect = Symbol.for("nodejs.util.inspect.custom");
 /**
  * 天干地支对象
@@ -167,5 +173,8 @@ class SexagenaryCycle {
 		return this.cstb();
 	}
 }
-
+SexagenaryCycle.SEXAGENARY_CYCLE_ARR = SEXAGENARY_CYCLE_ARR;
+SexagenaryCycle.SEXAGENARY_CYCLE = SEXAGENARY_CYCLE;
+SexagenaryCycle.SC = SC;
+SexagenaryCycle.SC_ARR = SC_ARR;
 module.exports = SexagenaryCycle;
