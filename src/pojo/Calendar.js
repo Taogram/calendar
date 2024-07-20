@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 15:38:09
  * @LastEditors: lax
- * @LastEditTime: 2024-02-14 10:00:40
+ * @LastEditTime: 2024-07-20 19:37:14
  */
 const SexagenaryCycle = require("./SexagenaryCycle");
 const Algorithm = require("@/algorithm/SolarCalendar");
@@ -19,6 +19,7 @@ class Calendar {
 	 * @param {*} origin 干支历的起始时间点
 	 * @param {*} type 类型 阳历/阴历/阴阳历
 	 * @param {*} algo 算法
+	 * @param {*} options 配置
 	 */
 	constructor(_obj = new Date(), origin, type = 0, algo, options) {
 		let obj = _obj;

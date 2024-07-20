@@ -1,6 +1,6 @@
 {
   "name": "tao_calendar",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "description": "基于js的干支历",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
     "readme.md"
   ],
   "dependencies": {
-    "solar_terms.js": "^0.0.3",
+    "solar_terms.js": "^0.0.4",
     "tao_name": "^0.1.0",
     "tao_taichi.js": "^0.0.5"
   },

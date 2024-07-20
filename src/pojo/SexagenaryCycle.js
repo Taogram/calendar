@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 20:15:13
  * @LastEditors: lax
- * @LastEditTime: 2024-05-18 21:14:54
+ * @LastEditTime: 2024-07-13 23:24:46
  */
 const CelestialStems = require("@/pojo/CelestialStems");
 const TerrestrialBranches = require("@/pojo/TerrestrialBranches");
@@ -127,8 +127,7 @@ class SexagenaryCycle {
 		// result-> 0-11 -> terrestrialBranches.index
 		const y = arg % 12;
 		// result-> 0-59
-		this.x = new CelestialStems(x);
-		this.y = new TerrestrialBranches(y);
+		this.#generateByCSAndTB(x, y);
 		this.index = arg;
 	}
 
@@ -164,9 +163,14 @@ class SexagenaryCycle {
 	}
 
 	#generateByTwo(x, y) {
+		this.#generateByCSAndTB(x, y);
+		this.index = this.#getIndex();
+	}
+
+	/** 根据天干地支对象生成 */
+	#generateByCSAndTB(x, y) {
 		this.x = new CelestialStems(x);
 		this.y = new TerrestrialBranches(y);
-		this.index = this.#getIndex();
 	}
 
 	[inspect]() {

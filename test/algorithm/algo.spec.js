@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-04-12 20:16:08
  * @LastEditors: lax
- * @LastEditTime: 2024-05-19 09:39:54
+ * @LastEditTime: 2024-07-20 19:44:32
  */
 const moment = require("moment");
 const algo = require("@/algorithm/SolarCalendar");
@@ -15,6 +15,9 @@ describe("算法测试：年干支", () => {
 	const years = [
 		["-002696-10-14T14:00:00.000Z", "甲子"],
 		["2021-09-05", "辛丑"],
+		["2024-02-03", "癸卯"],
+		["2024-02-04", "甲辰"],
+		["2024-02-05", "甲辰"],
 	];
 	years.map(([time, cstb]) => {
 		const t = moment(time).format("YYYY-MM-DD:HH-mm:ss");
