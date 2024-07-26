@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2024-05-19 09:39:00
+ * @LastEditTime: 2024-07-25 21:36:32
  */
 const { SolarTerms } = require("solar_terms.js");
 const { CELESTIAL_STEMS_ARR, SEXAGENARY_CYCLE_ARR } = require("tao_name");
@@ -17,9 +17,14 @@ const Julian = require("julian.js");
  * @param {Object} p 配置
  */
 
-function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
+function algorithm(
+	_date,
+	_o = new Date("-002696-10-14T14:00:00.000Z"),
+	p = {}
+) {
 	const date = new Date(_date);
 	const o = new Date(_o);
+	const accuracy = p.accuracy === undefined ? false : p.accuracy;
 
 	const year = date.getFullYear();
 	let origin = o.getFullYear();
@@ -28,11 +33,15 @@ function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
 	if (_year < 0) _year = (_year % 60) + 60;
 	if (_origin < 0) _origin = (_origin % 60) + 60;
 
-	const options = Object.assign({}, p, { year });
+	const options = Object.assign({}, p.solarTermsOptions, { year });
 	const during = new SolarTerms(options).getSolarTermsAll();
 
 	const start = during[2];
-	if (date.getTime() <= start.getTime()) _year -= 1;
+	let checkDate;
+	let checkStart;
+	checkDate = accuracy ? date.getTime() : ~~(date.getTime() / 86400000);
+	checkStart = accuracy ? start.getTime() : ~~(start.getTime() / 86400000);
+	if (checkDate < checkStart) _year -= 1;
 
 	let diff = Math.abs(_year - _origin);
 	const yIndex = diff % 60;
@@ -49,7 +58,7 @@ function algorithm(_date, _o = new Date("-002696-10-14T14:00:00.000Z"), p) {
 		SEXAGENARY_CYCLE_ARR.indexOf(
 			CELESTIAL_STEMS_ARR[((((yIndex % 10) * 2) % 10) + 2) % 10] + "寅"
 		) +
-		(calcMonth(date, during) - 2);
+		(calcMonth(date, during, accuracy) - 2);
 
 	let dIndex = (~~Julian.UTC$JD(date) - ~~Julian.UTC$JD(o)) % 60;
 	if (dIndex < 0) dIndex += 60;
