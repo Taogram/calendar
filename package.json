@@ -15,7 +15,7 @@
     "readme.md"
   ],
   "dependencies": {
-    "solar_terms.js": "^0.0.4",
+    "solar_terms.js": "^0.1.0",
     "tao_name": "^0.1.0",
     "tao_taichi.js": "^0.0.5"
   },
