@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2022-08-26 09:38:02
  * @LastEditors: lax
- * @LastEditTime: 2024-07-25 21:29:57
+ * @LastEditTime: 2024-07-27 09:26:52
  * @FilePath: \tao_solar_terms\test\data\2022.js
  */
 module.exports = [
@@ -37,6 +37,8 @@ module.exports = [
 	["2022-12-23 05:48:00", 0, true],
 	// FALSE
 	["2022-01-04 17:14:00", 0, false],
+	// 时区0点测试
+	["2022-01-05 00:00:00", 1, false],
 	["2022-01-05 17:13:00", 1, false],
 	["2022-01-19 10:39:00", 1, false],
 	["2022-02-04 04:48:00", 2, false],

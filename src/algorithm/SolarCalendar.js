@@ -4,12 +4,13 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2024-07-25 21:36:32
+ * @LastEditTime: 2024-07-28 10:41:33
  */
 const { SolarTerms } = require("solar_terms.js");
 const { CELESTIAL_STEMS_ARR, SEXAGENARY_CYCLE_ARR } = require("tao_name");
 const calcMonth = require("@/algorithm/calcMonth");
 const Julian = require("julian.js");
+const reduceTimeOffset = require("@/algorithm/reduceTimeOffset");
 /**
  * @description 转干支历
  * @param {date} date 公历时间
@@ -19,13 +20,14 @@ const Julian = require("julian.js");
 
 function algorithm(
 	_date,
-	_o = new Date("-002696-10-14T14:00:00.000Z"),
+	_o = new Date("-002696-10-14T00:00:00.000+08:00"),
 	p = {}
 ) {
 	const date = new Date(_date);
 	const o = new Date(_o);
 	const accuracy = p.accuracy === undefined ? false : p.accuracy;
 
+	// 干支纪年
 	const year = date.getFullYear();
 	let origin = o.getFullYear();
 	let _year = year;
@@ -37,21 +39,24 @@ function algorithm(
 	const during = new SolarTerms(options).getSolarTermsAll();
 
 	const start = during[2];
-	let checkDate;
-	let checkStart;
-	checkDate = accuracy ? date.getTime() : ~~(date.getTime() / 86400000);
-	checkStart = accuracy ? start.getTime() : ~~(start.getTime() / 86400000);
+	// 修正至时区日期的对比
+	let checkDate = date.getTime() - reduceTimeOffset(date);
+	let checkStart = start.getTime() - reduceTimeOffset(start);
+	checkDate = accuracy ? checkDate : ~~(checkDate / 86400000);
+	checkStart = accuracy ? checkStart : ~~(checkStart / 86400000);
 	if (checkDate < checkStart) _year -= 1;
 
 	let diff = Math.abs(_year - _origin);
 	const yIndex = diff % 60;
 
-	// 甲己之年丙作首，乙庚之岁戊为头；
-	// 丙辛必定寻庚起，丁壬壬位顺行流；
-	// 更有戊癸何方觅，甲寅之上好追求。
-	// 05->2,16->4
-	// 27->6,38->8
-	// 49->0
+	/** 干支纪月
+	 * 甲己之年丙作首，乙庚之岁戊为头；
+	/* 丙辛必定寻庚起，丁壬壬位顺行流；
+	/* 更有戊癸何方觅，甲寅之上好追求。
+	/* 05->2,16->4
+	/* 27->6,38->8
+	/* 49->0
+	 */
 
 	// yIndex->yCS->mCS
 	const mIndex =
@@ -60,7 +65,16 @@ function algorithm(
 		) +
 		(calcMonth(date, during, accuracy) - 2);
 
-	let dIndex = (~~Julian.UTC$JD(date) - ~~Julian.UTC$JD(o)) % 60;
+	// 干支纪日
+	let dDate = new Date(date.getTime() - reduceTimeOffset(date));
+	let oDate = new Date(o.getTime() - reduceTimeOffset(o));
+	dDate = Julian.$TD$JD(dDate);
+	oDate = Julian.$TD$JD(oDate);
+	const dF = dDate - ~~dDate;
+	const oF = oDate - ~~oDate;
+	dDate = dF < 0.5 ? ~~dDate - 0.5 : ~~dDate + 0.5;
+	oDate = oF < 0.5 ? ~~oDate - 0.5 : ~~oDate + 0.5;
+	let dIndex = (dDate - oDate) % 60;
 	if (dIndex < 0) dIndex += 60;
 
 	// 甲己还甲子，乙庚丙作初
