@@ -4,7 +4,7 @@
  * @Author: lax
  * @Date: 2020-10-22 15:38:09
  * @LastEditors: lax
- * @LastEditTime: 2024-07-20 19:37:14
+ * @LastEditTime: 2024-09-15 00:18:40
  */
 const SexagenaryCycle = require("./SexagenaryCycle");
 const Algorithm = require("@/algorithm/SolarCalendar");
@@ -74,10 +74,11 @@ class Calendar {
 			obj = Array.from(obj.trim());
 		}
 		if (obj instanceof Date) {
-			const [time, during] = this.algorithm(obj, origin, options);
+			const [time, during, l] = this.algorithm(obj, origin, options);
 			obj = time;
 			this.time = time;
 			this.during = during;
+			this.l = l;
 		}
 		if (obj instanceof Array) {
 			if (obj.length >= 8) {
