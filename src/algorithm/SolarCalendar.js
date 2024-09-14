@@ -4,9 +4,9 @@
  * @Author: lax
  * @Date: 2023-04-06 21:28:04
  * @LastEditors: lax
- * @LastEditTime: 2024-07-28 10:41:33
+ * @LastEditTime: 2024-09-15 00:14:47
  */
-const { SolarTerms } = require("solar_terms.js");
+const { SolarTerms, Ecliptic } = require("solar_terms.js");
 const { CELESTIAL_STEMS_ARR, SEXAGENARY_CYCLE_ARR } = require("tao_name");
 const calcMonth = require("@/algorithm/calcMonth");
 const Julian = require("julian.js");
@@ -90,7 +90,10 @@ function algorithm(
 		) +
 		(~~((date.getHours() + 1) / 2) % 12);
 
-	return [[yIndex, mIndex, dIndex, hIndex], during];
+	const jd = new Julian(date).getJD();
+	let l = new Ecliptic(jd).getSunEclipticLongitude();
+
+	return [[yIndex, mIndex, dIndex, hIndex], during, l];
 }
 
 module.exports = algorithm;
